@@ -14,11 +14,15 @@ from pathlib import Path
 import os
 import dotenv
 import sys
-
+import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# To have folder with apps
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+
+# Heroku set
+django_heroku.settings(locals())
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
