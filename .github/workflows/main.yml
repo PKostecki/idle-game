@@ -1,0 +1,17 @@
+name: Test CI/CD
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy-to-heroku:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}} # Skopiuj API KEY ze swojego konta heroku i dodaj je jako sekret w projekcie
+          heroku_app_name: "my-idle-game" # Wpisz nazwe swojej aplikacji
+          heroku_email: "zreth99@gmail.com" # Wpisz swój adres email
