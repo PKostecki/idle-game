@@ -20,12 +20,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest
-      - name: Test with pytest
+      - name: Test
         env:
           SECRET_KEY: ${{secrets.SECRET_KEY}}
         run: |
           pytest
-      - uses: akhileshns/heroku-deploy@v3.12.12
+      - name: deploy
+        uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}} # Skopiuj API KEY ze swojego konta heroku i dodaj je jako sekret w projekcie
           heroku_app_name: "my-idle-game" # Wpisz nazwe swojej aplikacji
