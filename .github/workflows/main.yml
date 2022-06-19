@@ -23,6 +23,8 @@ jobs:
       - name: Test
         env:
           SECRET_KEY: ${{secrets.SECRET_KEY}}
+          EMAIL_USER: ${{secrets.EMAIL_USER}}
+          EMAIL_PASSWORD: ${{secrets.EMAIL_PASSWORD}}
         run: |
           pytest
       - name: deploy
