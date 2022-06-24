@@ -1,7 +1,9 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.contrib.auth.models import User, Group, Permission
 import pytest
 from typing import List, Optional
+
+client = Client()
 
 
 @pytest.fixture
@@ -19,7 +21,7 @@ def app_user_factory(db, app_user_group: Group):
     # Closure
     def create_app_user(
             username: str,
-            password: Optional[str] = None,
+            password: str,
             first_name: Optional[str] = "first name",
             last_name: Optional[str] = "last name",
             email: Optional[str] = "foo@bar.com",
@@ -47,13 +49,33 @@ def app_user_factory(db, app_user_group: Group):
 
 
 @pytest.fixture
+def create_test_user(db, app_user_factory) -> User:
+    return app_user_factory(username="TestUser", password="", email="test")
+
+
+def test_dashboard():
+    response = client.get('/')
+    assert response.status_code == 200
+
+
+def test_register():
+    response = client.get('/register')
+    assert response.status_code == 200
+
+
+@pytest.fixture
 def user_A(db, app_user_factory) -> User:
-    return app_user_factory("A")
+    return app_user_factory("A", password="")
 
 
 @pytest.fixture
 def user_B(db, app_user_factory) -> User:
-    return app_user_factory("B")
+    return app_user_factory("B", password="")
+
+
+def test_create_user(create_test_user: User) -> None:
+    assert create_test_user.email == "test"
+    assert create_test_user.is_active
 
 
 def test_should_create_user_in_app_user_group(
