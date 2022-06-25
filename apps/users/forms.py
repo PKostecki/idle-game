@@ -18,7 +18,6 @@ class CustomUserCreationForm(UserCreationForm):
 
     def clean_email(self):
         cleaned_data = super().clean()
-        print(cleaned_data["email"])
         email = User.objects.filter(email=cleaned_data["email"])
         if email.exists():
             raise ValidationError("The email is taken, please try another one")
