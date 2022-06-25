@@ -48,42 +48,42 @@ def app_user_factory(db, app_user_group: Group):
     return create_app_user
 
 
-@pytest.fixture
-def create_test_user(db, app_user_factory) -> User:
-    return app_user_factory(username="TestUser", password="", email="test")
-
-
-def test_dashboard():
-    response = client.get('/')
-    assert response.status_code == 200
-
-
-def test_register():
-    response = client.get('/register')
-    assert response.status_code == 200
-
-
-@pytest.fixture
-def user_A(db, app_user_factory) -> User:
-    return app_user_factory("A", password="")
-
-
-@pytest.fixture
-def user_B(db, app_user_factory) -> User:
-    return app_user_factory("B", password="")
-
-
-def test_create_user(create_test_user: User) -> None:
-    assert create_test_user.email == "test"
-    assert create_test_user.is_active
-
-
-def test_should_create_user_in_app_user_group(
-        user_A: User,
-        app_user_group: Group,
-) -> None:
-    assert user_A.groups.filter(pk=app_user_group.pk).exists()
-
-
-def test_should_create_two_users(user_A: User, user_B: User) -> None:
-    assert user_A.pk != user_B.pk
+# @pytest.fixture
+# def create_test_user(db, app_user_factory) -> User:
+#     return app_user_factory(username="TestUser", password="", email="test")
+#
+#
+# def test_dashboard():
+#     response = client.get('/')
+#     assert response.status_code == 200
+#
+#
+# def test_register():
+#     response = client.get('/register')
+#     assert response.status_code == 200
+#
+#
+# @pytest.fixture
+# def user_A(db, app_user_factory) -> User:
+#     return app_user_factory("A", password="")
+#
+#
+# @pytest.fixture
+# def user_B(db, app_user_factory) -> User:
+#     return app_user_factory("B", password="")
+#
+#
+# def test_create_user(create_test_user: User) -> None:
+#     assert create_test_user.email == "test"
+#     assert create_test_user.is_active
+#
+#
+# def test_should_create_user_in_app_user_group(
+#         user_A: User,
+#         app_user_group: Group,
+# ) -> None:
+#     assert user_A.groups.filter(pk=app_user_group.pk).exists()
+#
+#
+# def test_should_create_two_users(user_A: User, user_B: User) -> None:
+#     assert user_A.pk != user_B.pk
