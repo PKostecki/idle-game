@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.urls import reverse
 from .forms import CustomUserCreationForm
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib import messages
 
 
+@login_required
 def dashboard(request):
     return render(request, "users/dashboard.html")
 
